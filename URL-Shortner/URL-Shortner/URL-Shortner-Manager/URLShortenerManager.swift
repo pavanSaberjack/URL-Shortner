@@ -14,20 +14,16 @@ class URLShortenerManager: URLShortenerService {
     private init() {}
     
     func getShortURL(longURL: URL) throws -> URL? {
-        var shortURL: URL?
         do {
-            shortURL = try shortenerService.getShortURL(longURL: longURL)
-            return shortURL
+            return try shortenerService.getShortURL(longURL: longURL)
         } catch {
             throw URLShortenerError.someError
         }
     }
     
     func getOriginalURL(shortURL: URL) throws -> URL? {
-        var originalURL: URL?
         do {
-            originalURL = try shortenerService.getOriginalURL(shortURL: shortURL)
-            return originalURL
+            return try shortenerService.getOriginalURL(shortURL: shortURL)
         } catch {
             throw URLShortenerError.someError
         }

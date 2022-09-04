@@ -8,18 +8,17 @@
 import XCTest
 @testable import URL_Shortner
 
-class FakeURLShortnerService: URLShortenerService {
-    let shortURL = URL(string: "https://www.abc.com")!
-    var originalURL: URL?
-    
-    
+class FakeURLShortenerService: URLShortenerService {
     func getShortURL(longURL: URL) throws -> URL? {
-        originalURL = longURL
-        return URL(string: "https://www.abc.com")!
+        return nil
     }
     
     func getOriginalURL(shortURL: URL) throws -> URL? {
-        return originalURL
+        return nil
+    }
+    
+    var baseURL: URL {
+        return URL(string: "https://app.diagrams.net/")!
     }
 }
 
@@ -32,19 +31,11 @@ class URLShortenerServiceTests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        URLShortenerManager.shared.shortenerService = FakeURLShortnerService()
-        
-        let longUrl = URL(string: "https://www.google.com")!
-        let shortURL = URL(string: "https://www.abc.com")!
-        
-        let url = try? URLShortenerManager.shared.getShortURL(longURL: longUrl)
-        XCTAssertEqual(shortURL, url)
-        
-        
-        let originalURL = try? URLShortenerManager.shared.getOriginalURL(shortURL: shortURL)
-        XCTAssertEqual(originalURL, longUrl)
+    
+    func testForBaseURL() throws {
+        let service = FakeURLShortnerService()
+        let url = URL(string: "https://app.diagrams.net/")!
+        XCTAssertEqual(service.baseURL, url)
     }
 
     func testPerformanceExample() throws {
